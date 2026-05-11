@@ -1,0 +1,69 @@
+{
+  "skill_name": "urban-renewal-handouts-sync",
+  "evals": [
+    {
+      "id": 1,
+      "name": "sync-casual",
+      "prompt": "幫我看一下臺北市都更教育訓練站最近有沒有新的講義，有的話順便抓回來",
+      "expected_output": "觸發 skill → 跑 scripts/download.py → 解讀 stdout → 回報新增/跳過/失敗筆數，若有新增則列出課程名稱",
+      "should_trigger": true,
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "sync-explicit-url",
+      "prompt": "把 uro.clcoordinate.com 下載專區的 PDF 全部同步到我電腦上",
+      "expected_output": "觸發 skill → 跑同步腳本 → 回報結果",
+      "should_trigger": true,
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "query-by-topic",
+      "prompt": "我之前看過的都更講義裡面有沒有講到估價的？我想找來再看一次",
+      "expected_output": "觸發 skill → 讀 index.csv → 過濾課程名稱含「估價」→ 條列回應，含 PDF 本地路徑",
+      "should_trigger": true,
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "query-by-series",
+      "prompt": "都更解壓說系列我有下載哪幾集？把清單給我",
+      "expected_output": "觸發 skill → 讀 index.csv → 過濾課程名稱以「都更解壓說」開頭 → 排序並條列",
+      "should_trigger": true,
+      "files": []
+    },
+    {
+      "id": 5,
+      "name": "summarize-handout",
+      "prompt": "幫我摘要一下「都更解壓說01」那份講義在講什麼",
+      "expected_output": "觸發 skill → Workflow C → 找到 PDF 路徑 → 委派 anthropic-skills:pdf 做摘要 → 從寶舖開發部觀點回應",
+      "should_trigger": true,
+      "files": []
+    },
+    {
+      "id": 6,
+      "name": "negative-property-eval",
+      "prompt": "老闆丟了一塊承德路三段的地給我看，請幫我評估都更案的可行性，容積率是 300%",
+      "expected_output": "不該觸發本 skill — 應觸發 property-eval skill。即使提到「都更」，但情境是個案評估，與本 skill 的講義同步無關",
+      "should_trigger": false,
+      "files": []
+    },
+    {
+      "id": 7,
+      "name": "negative-generic-pdf",
+      "prompt": "幫我下載 https://example.com/foo.pdf 並摘要重點",
+      "expected_output": "不該觸發本 skill — 應使用 anthropic-skills:pdf 或一般下載工具。網址不是 uro.clcoordinate，主題也不是都更教育訓練",
+      "should_trigger": false,
+      "files": []
+    },
+    {
+      "id": 8,
+      "name": "negative-other-uro-site",
+      "prompt": "內政部都更入口網站有沒有最新的法令更新？",
+      "expected_output": "不該觸發本 skill — 本 skill 只涵蓋 uro.clcoordinate.com 一個站，不涵蓋內政部都更入口",
+      "should_trigger": false,
+      "files": []
+    }
+  ]
+}

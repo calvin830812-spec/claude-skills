@@ -1,0 +1,69 @@
+{
+  "skill_name": "urban-renewal-cases-sync",
+  "evals": [
+    {
+      "id": 1,
+      "name": "sync-casual",
+      "prompt": "幫我看一下都更處最近有什麼新的掛件案，順便把新的抓回來",
+      "expected_output": "觸發 skill → 跑 scripts/download_cases.py → 解讀 stdout → 回報新增/跳過/失敗筆數，若有新增則按類別列出案件名稱",
+      "should_trigger": true,
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "query-by-district",
+      "prompt": "信義區最近有哪些都更掛件？列出來給我",
+      "expected_output": "觸發 skill → Workflow B → 讀 index.csv → 過濾案件名稱含「信義區」→ 按公告日期反向排序回應",
+      "should_trigger": true,
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "query-by-developer",
+      "prompt": "潤泰有哪些案在掛件？",
+      "expected_output": "觸發 skill → 讀 index.csv → 過濾案件名稱含「潤泰」→ 條列",
+      "should_trigger": true,
+      "files": []
+    },
+    {
+      "id": 4,
+      "name": "query-by-section",
+      "prompt": "我想找雅祥段附近的都更案件公告",
+      "expected_output": "觸發 skill → 讀 index.csv → 過濾案件名稱含「雅祥段」→ 條列含 PDF 連結",
+      "should_trigger": true,
+      "files": []
+    },
+    {
+      "id": 5,
+      "name": "summarize-case",
+      "prompt": "幫我摘要剛剛找到的「信義區逸仙段三小段766地號等14筆」那個核定案，重點是建商獲利條件",
+      "expected_output": "觸發 skill → Workflow B 找到 PDF → 委派 anthropic-skills:pdf 摘要，並從寶舖開發部觀點回應",
+      "should_trigger": true,
+      "files": []
+    },
+    {
+      "id": 6,
+      "name": "list-categories",
+      "prompt": "都更處的核定案最近 5 筆是哪些？",
+      "expected_output": "觸發 skill → 讀 index.csv → 過濾類別=核定案 → 排序取前 5",
+      "should_trigger": true,
+      "files": []
+    },
+    {
+      "id": 7,
+      "name": "negative-property-eval",
+      "prompt": "老闆給我承德路三段一塊地，請幫我做都更可行性評估，容積率 300%、面積 800 坪",
+      "expected_output": "不該觸發本 skill — 應觸發 property-eval。情境是個案評估，不是公告檔案管理",
+      "should_trigger": false,
+      "files": []
+    },
+    {
+      "id": 8,
+      "name": "negative-handouts",
+      "prompt": "都更估價師估什麼那場線上課程的講義有沒有抓回來？",
+      "expected_output": "不該觸發本 skill — 應觸發 urban-renewal-handouts-sync。情境是教育訓練講義，不是案件公告",
+      "should_trigger": false,
+      "files": []
+    }
+  ]
+}
